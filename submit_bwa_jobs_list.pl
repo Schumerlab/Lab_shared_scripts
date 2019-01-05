@@ -69,7 +69,7 @@ while(my $line=<IN>){
     my $string7="java -jar "."$path_picard"."/GenomeAnalysisTK.jar -T IndelRealigner -R $genome -I $dedup -targetIntervals $targets -o $realigned";
 
     open OUT, ">run_bwa_shell_"."$counter".".sh";
-    print OUT "$command\n$string1\n$string2\n$string3\n$string4\n$string5\t$string6\t$string7\n";
+    print OUT "$command\n$string1\n$string2\n$string3\n$string4\n$string5\n$string6\n$string7\n";
 
     my $script="run_bwa_shell_"."$counter".".sh";
     system("sbatch $script");
