@@ -50,7 +50,7 @@ else
 fi
 
 #Specify the path to barcode_splitter.py:
-BCSPLIT="barcode_splitter.py"
+BCSPLIT="/home/groups/schumer/shared_bin/Lab_shared_scripts/barcode_splitter.py"
 
 #Construct the template barcode_splitter.py command:
 #"--mismatches=${MISMATCHES} --idxread=${IDXREAD} --gzip --suffix=.fastq.gz --bcfile=${BCFILE} ${READFILES}"
