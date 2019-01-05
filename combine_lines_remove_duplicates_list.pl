@@ -3,7 +3,7 @@
 #adapted from FAS scriptome: takes in a list of files and merges their contents while removing duplicates
 
 if(@ARGV<2){
-    print "perl combine_lines_remove_duplicates_list.pl list_of_files outfile_name";
+    print "perl combine_lines_remove_duplicates_list.pl list_of_files outfile_name\n"; exit;
 }#print usage
 
 my $list=shift(@ARGV); chomp $list;

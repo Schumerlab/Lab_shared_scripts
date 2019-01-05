@@ -1,5 +1,9 @@
 #perl! -w
 
+if(@ARGV<3){
+    print "perl count_basecomp_window.pl list_of_windows_to_analyze.bed genome.fa path_to_fastahack\n"; exit;
+}#print usage
+
 ###RELIES ON fastahack being in your path
 ###list format: chrom\tstart\tstop\n
 use List::Util qw(sum);
@@ -8,6 +12,8 @@ my $list=shift(@ARGV); chomp $list;
 open IN, $list or die "cannot open list file\n";
 
 my $genome=shift(@ARGV); chomp $genome;
+
+my $fastahack=shift(@ARGV); chomp $fastahack;
 
 my $counter=0;
 while(my $line=<IN>){
@@ -20,7 +26,7 @@ while(my $line=<IN>){
     my $start=$elements[1]; chomp $start;
     my $stop=$elements[2]; chomp $stop;
 
-    my $region=qx(fastahack $genome -r $group:$start..$stop); chomp $region;
+    my $region=qx($fastahack/fastahack $genome -r $group:$start..$stop); chomp $region;
 
     #print "$region\n";
 

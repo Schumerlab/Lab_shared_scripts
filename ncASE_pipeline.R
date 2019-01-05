@@ -1,3 +1,5 @@
+##pipeline from Maria Gutin (e-mail mgutin@princeton.edu for permission to use)
+
 args<-commandArgs(TRUE)
 
 mydist <- function(data, snp1, snp2){
@@ -61,10 +63,10 @@ snps <- na.omit(snps)
 
 colnames(snps) <- c("variant","transcript", "species_1_species_1","species_1_species_2","species_2_species_2","species_2_species_1","position")
 
-snps <- snps[snps$species_1_species_1/(snps$species_1_species_1 + snps$species_2_species_1) > .475
-                   & snps$species_1_species_1/(snps$species_1_species_1 + snps$species_2_species_1) < .525
-                   & snps$species_2_species_2/(snps$species_1_species_2 + snps$species_2_species_2) > .475
-                   & snps$species_2_species_2/(snps$species_1_species_2 + snps$species_2_species_2) < .525,]
+snps <- snps[snps$species_1_species_1/(snps$species_1_species_1 + snps$species_2_species_1) > .45
+                   & snps$species_1_species_1/(snps$species_1_species_1 + snps$species_2_species_1) < .55
+                   & snps$species_2_species_2/(snps$species_1_species_2 + snps$species_2_species_2) > .45
+                   & snps$species_2_species_2/(snps$species_1_species_2 + snps$species_2_species_2) < .55,]
 
 snps$weight <- sapply(snps$variant,myweight,data=snps)
 

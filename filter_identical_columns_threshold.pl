@@ -26,6 +26,7 @@ my $line_prev=$firstline;
 my $marker_prev=$data_prev[0]; chomp $marker_prev;
 my @info=split(/:/,$marker_prev);
 my $group_prev=$info[0]; chomp $group_prev;
+my $group=$group_prev;
 #print "$group_prev\n";
 while(my $line=<IN>){
 
@@ -34,26 +35,29 @@ while(my $line=<IN>){
 
     my $marker=$data[0]; chomp $marker;
     my @info=split(/:/,$marker);
-    my $group=$info[0]; chomp $group;
+    $group=$info[0]; chomp $group;
 #!    print "$group\n";
 
     $counter=0;
     for my $k (1..scalar(@data)-1){
 	my $focal1=$data[$k]; chomp $focal1;
 	my $focal2=$data_prev[$k]; $focal2;
-	if($focal1 ne $focal2){
+	if(($focal1 ne $focal2)&&($focal2 ne 'NA')){
 	    $counter=$counter+1;
 	}#count
     }#compare lines, count
 
     if(($counter>=$thresh) or ($group ne $group_prev)){
 	print OUT "$line_prev\n";
-    }#check, preint
+	#print "$group\n";
+    }#check, print
 
 #!    print "$counter\n";
 
+    if(($counter>=$thresh) or ($group ne $group_prev)){
     $line_prev=$line;
     @data_prev=@data;
+    }#check, reset 
 
     $group_prev=$group;
 

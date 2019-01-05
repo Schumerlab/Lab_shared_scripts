@@ -2,15 +2,12 @@
 #####NOTE: individual order *must* be identical across files!!!
 
 args <- commandArgs(TRUE)
-if(length(args)<5){
-stop("usage is Rscript perform_glm_admixture_mapping_v2_gaussiantrait_interactionmodel.R genotypes_file hybrid_index_file phenotypes_file focal_column_number interaction_marker")
+if(length(args)<6){
+stop("usage is Rscript perform_glm_admixture_mapping_v2_gaussiantrait_interactionmodel.R genotypes_file hybrid_index_file phenotypes_file focal_column_number interaction_marker name_tag")
 }
 
 infile <- as.character(args[1])
-out<-paste(infile,"_results_v2_gaussian_interaction_model",sep="")
 data<-read.csv(file=infile,head=T,as.is=T,sep="\t")
-
-file.remove(out)
 
 hybrid_index<-as.character(args[2])
 
@@ -23,6 +20,11 @@ interaction_marker<-as.character(args[5])
 phenotypes<-read.csv(file=pheno,sep="\t",head=FALSE)
 
 index<-read.csv(file=hybrid_index,sep="\t",head=FALSE)
+
+tag<-as.character(args[6])
+
+out<-paste(infile,"_results_gaussian_interaction_model_",interaction_marker,"_",tag,sep="")
+file.remove(out)
 
 names<-colnames(data)
 
@@ -39,7 +41,7 @@ model2<-glm(as.numeric(dat[,1])~as.numeric(dat[,2])+as.numeric(dat[,3])+as.numer
 
 null<-logLik(model2)[1]
 
-model1<-glm(as.numeric(dat[,1])~as.numeric(dat[,2]) + as.numeric(dat[,3])*as.numeric(dat[,4]),family="gausian")
+model1<-glm(as.numeric(dat[,1])~as.numeric(dat[,2]) + as.numeric(dat[,3])*as.numeric(dat[,4]),family="gaussian")
 
 focal<-logLik(model1)[1]
 
@@ -47,12 +49,14 @@ like_diff<-focal-null
 
 p <- summary(model1)$coef[, "Pr(>|t|)"]
 p<-t(p)
-results<-cbind(names[x],p,(summary(model1)$coef[,"t value"])[4],like_diff)
+results<-cbind(names[x],p,(summary(model1)$coef[,"t value"])[4],like_diff,length(dat[,1]))
+if(length(results) == 9){
 if(track==0){
-write.table(results,file=out,append=TRUE,col.names=c("chrom.marker","intercept","mixture_prop","site1","site2","interaction","t-value","likelihood-diff"),row.names=F,sep="\t",quote=FALSE)
+write.table(results,file=out,append=TRUE,col.names=c("chrom.marker","intercept","mixture_prop","site1","site2","interaction","t-value","likelihood-diff","num_ind"),row.names=F,sep="\t",quote=FALSE)
 track=1
 } else{
-write.table(cbind(names[x],p,(summary(model1)$coef[,"t value"])[4],like_diff),file=out,append=TRUE,col.names=FALSE,row.names=F,sep="\t",quote=FALSE)
+write.table(results,file=out,append=TRUE,col.names=FALSE,row.names=F,sep="\t",quote=FALSE)
+}#quick fix to exclude fixed markers
 
 }
 

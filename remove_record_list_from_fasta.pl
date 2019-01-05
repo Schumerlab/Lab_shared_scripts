@@ -1,4 +1,4 @@
-#perl! -w
+#perl!
 
 if(@ARGV<2){
     print "perl remove_record_list_from_fasta.pl list_of_sequences_to_remove fasta_file\n"; exit;

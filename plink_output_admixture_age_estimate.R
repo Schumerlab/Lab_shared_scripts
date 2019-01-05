@@ -14,20 +14,20 @@ window_size<-as.numeric(arrArgs[2])
 cM_per_window<-as.numeric(arrArgs[3])
 
 data<-read.csv(file=file,sep="\t",head=TRUE)
-dist<-abs(data$BP_A - data$BP_B)
+dist<-abs(data[,2] - data[,5])
 bins<-{}
 start=1
 stop=window_size
 cM_start=0
 cM_stop=cM_per_window
-max_cM=10
+max_cM=5
 num_its=(max_cM/cM_per_window)
 
 for(x in 0:num_its){
 focal<-subset(data,dist>start & dist<stop)
-meanD<-mean(focal$D)
-countD<-length(focal$D)
-SumD<-sum(focal$D)
+meanD<-mean(focal[,8],na.rm=TRUE)
+countD<-length(focal[,8])
+SumD<-sum(focal[,8],na.rm=TRUE)
 BinNum<-x
 Dist_cM<-mean(c(cM_start,cM_stop))
 bins<-rbind(bins,cbind(BinNum,start,stop,cM_start,cM_stop,Dist_cM,SumD,countD,meanD))

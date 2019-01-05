@@ -1,7 +1,7 @@
 #perl! -w
 
 if(@ARGV<2){
-    print "perl count_IUPAC_poly_single_genome.pl fasta_file window_size_inbp\n";
+    print "perl count_IUPAC_poly_single_genome.pl fasta_file window_size_inbp\n"; exit;
 }
 
 my $infile=shift(@ARGV); chomp $infile;

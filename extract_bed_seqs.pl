@@ -1,5 +1,7 @@
 #perl! -w
 
+##NOTE: Assumes fastahack is globally available. If it is not export the path, edit path in script or link to fastahack
+
 if(@ARGV<3){
     print "perl extract_bed_seqs.pl list_of_seqs.bed fasta_to_extract outfile_tag_name\n"; exit;
 }#print usage

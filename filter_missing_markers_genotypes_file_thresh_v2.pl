@@ -1,7 +1,7 @@
 #perl! -w
 
 if(@ARGV<3){
-    print "perl filter_missing_markers_thresh.pl infile_genotypes path_to:transpose_nameout.pl prop_missing_allowed\n"; exit;
+    print "perl filter_missing_markers_genotypes_file_thresh_v2.pl infile_genotypes path_to:transpose_nameout.pl prop_missing_allowed\n"; exit;
 }#print usage
 
 my $infile=shift(@ARGV); chomp $infile;

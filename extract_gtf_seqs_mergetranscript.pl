@@ -1,5 +1,9 @@
 #perl! -w
 
+if(@ARGV<3){
+    print "perl extract_gtf_seqs_mergetranscript.pl gene_of_interest.gtf fasta outfile_tag\n"; exit;
+}#print usage
+
 my $list=shift(@ARGV); chomp $list;
 open IN, $list or die "cannot open list file\n";
 

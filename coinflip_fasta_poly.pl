@@ -10,7 +10,7 @@ while(my $line=<IN>){
     my @elements=split(//,$line);
 
     $counter++;
-    if ($counter == 1){
+    if ($line =~ '>'){
 	print "$line\n";
     }
     else{
