@@ -1,7 +1,7 @@
 #perl! -w
 
 if(@ARGV<3){
-    print "perl filter_identical_columns_threshold_transposed.pl genotypes num_different_markers path_to:transpose_nameout.pl\n";
+    print "perl filter_identical_columns_threshold_transposed.pl genotypes num_different_markers path_to:transpose_nameout.pl\n"; exit;
 }
 
 my $infile=shift(@ARGV); chomp $infile;

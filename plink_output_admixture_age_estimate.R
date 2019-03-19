@@ -25,9 +25,9 @@ num_its=(max_cM/cM_per_window)
 
 for(x in 0:num_its){
 focal<-subset(data,dist>start & dist<stop)
-meanD<-mean(focal[,8],na.rm=TRUE)
-countD<-length(focal[,8])
-SumD<-sum(focal[,8],na.rm=TRUE)
+meanD<-mean(focal[,7],na.rm=TRUE)
+countD<-length(focal[,7])
+SumD<-sum(focal[,7],na.rm=TRUE)
 BinNum<-x
 Dist_cM<-mean(c(cM_start,cM_stop))
 bins<-rbind(bins,cbind(BinNum,start,stop,cM_start,cM_stop,Dist_cM,SumD,countD,meanD))

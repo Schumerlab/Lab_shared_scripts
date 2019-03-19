@@ -28,13 +28,12 @@ while(my $line = <IN>){
 #	$stop=$stop-$adjust;
     }
 
-    print "$group\t$start\t$stop\n";
+   # print "$group\t$start\t$stop\n";
 
     my $name="$list"."_"."$tag".".fa";
 
     if($counter ==1){
-	open OUT, ">$name";
-	print OUT ">"."$list"."_"."$tag"."\n";
+	print ">"."$list"."_"."$tag"."\n";
     }
 
     my $seq=qx(/home/groups/schumer/shared_bin/fastahack $fasta -r $group:$start..$stop); chomp $seq;
@@ -46,11 +45,11 @@ while(my $line = <IN>){
 	    #print "$revcomp\n";
     }
 
-    print OUT "$seq";
+    print "$seq";
     
 }
 
-print OUT "\n";
+print "\n";
 
 
 sub reverse_complement_IUPAC {

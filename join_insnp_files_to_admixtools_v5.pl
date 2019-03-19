@@ -5,7 +5,7 @@ use List::MoreUtils qw(uniq);
 #takes a list of insnp files and merges them into input for Admixtools
 #specify whether the reference allele/individual should be printed 0= no, 1 = yes, assumes the reference individual to be homozygous reference (2)
 #NOTE: in its current form, this is meant to be run chromosome by chromosomes
-#NOTE: depends on overlap_list_retain_unmatched-for-join-insnp.pl
+#requires: overlap_list_retain_unmatched-for-join-insnp.pl
 
 if(@ARGV<6){
     print "perl join_insnp_files.pl list_of_insnp_files_to_join outfiles_tag add_ref_0_1 thresh_num_indivs distance_filter path_to:overlap_list_retain_unmatched-for-join-insnp.pl\n"; exit;
@@ -132,9 +132,18 @@ for my $j (0..scalar(@uniq_positions)-1){
 my $file_string="";
 for my $i (0..scalar(@files)-1){
     my $focal_file=$files[$i]; chomp $focal_file;
-    system("perl $path/overlap_list_retain_unmatched-for-join-insnp.pl $aims_file $focal_file");
-    my $output="overlap"."$aims_file"."_"."$focal_file";
-    
+   
+    $outname=$focal_file;
+    if($outname=~ /\//){
+	my @namesplit=split(/\//,$outname);
+	$outname=$namesplit[scalar(@namesplit)-1];
+    }#deal with long paths
+
+    my $output="overlap"."$aims_file"."_"."$outname";
+    #print "$output\n";
+
+    system("perl $path/overlap_list_retain_unmatched-for-join-insnp_v2.pl $aims_file $focal_file $output");
+
     $file_string="$file_string"." "."$output";
     system("rm $focal_file\n");
     $focal_file=~ s/\.tmp//g;
@@ -154,9 +163,9 @@ while (my $results=<AIMS>){
         $string="2";
     }#generate the string with the reference basepair, assumed to be homozygous reference, i.e. 2    
 
-    $aim_tracker=$aim_tracker+1;
     my @elements=split(/\t/,$results);
     my $match=$uniq_positions[$aim_tracker];
+    $aim_tracker=$aim_tracker+1;
 
     for my $a (0..scalar(@elements)-1){
 	my $focal_base=$elements[$a]; chomp $focal_base;
@@ -182,8 +191,10 @@ while (my $results=<AIMS>){
     print OUT1 "$string\n";
     
     my @details=split(/_/,$match);
-    my $chrom_string="$details[0]".":"."$details[1]"."\t"."$details[0]"."\t"."0.0"."\t"."$details[1]"."\t"."$details[2]"."\t"."$al\t";
+    my $chrom_string="$details[0]".":"."$details[1]"."\t"."$details[0]"."\t"."0.0"."\t"."$details[1]"."\t"."$details[2]"."\t"."$alt\t";
     print OUT2 "$chrom_string\n";
+    $string="";
     }#ensure not missing or homozygous reference in everyone  
+#NB: removed, may add back later    
 
 }#process all sites

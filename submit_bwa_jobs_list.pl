@@ -70,7 +70,7 @@ while(my $line=<IN>){
 
     open OUT, ">run_bwa_shell_"."$counter".".sh";
     print OUT "$command\n$string1\n$string2\n$string3\n$string4\n$string5\n$string6\n$string7\n";
-
+    print OUT "rm $sam\nrm $bam\nrm $dedup\n";
     my $script="run_bwa_shell_"."$counter".".sh";
     system("sbatch $script");
 
