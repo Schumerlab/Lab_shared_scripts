@@ -15,13 +15,13 @@ pheno<-as.character(args[3])
 
 pheno_column<-as.numeric(args[4])
 
-phenotypes<-read.csv(file=pheno,sep="\t",head=FALSE)
+phenotypes<-read.csv(file=pheno,sep="\t",head=TRUE)
 
 index<-read.csv(file=hybrid_index,sep="\t",head=FALSE)
 
 tag<-as.character(args[5])
 
-out<-paste(infile,"_results_gaussian_",tag,sep="")
+out<-paste(infile,"_results_gaussian_v2_",tag,sep="")
 file.remove(out)
 
 names<-colnames(data)
@@ -29,9 +29,8 @@ names<-colnames(data)
 track=0
 for (x in 2:length(data[1,])){
 
-dat<-cbind(phenotypes[,pheno_column],index$V2,data[,x])
+dat<-cbind(phenotypes[,pheno_column],index$V4,data[,x])
 dat<-na.omit(dat)
-dat<-subset(dat,dat[,2]>0.2 & dat[,2]<0.9)
 
 if(length(dat[,1]) >= (length(data[,1])*0.25) & length(unique(dat[,3]))>1){
 
