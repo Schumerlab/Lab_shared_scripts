@@ -32,12 +32,15 @@ my $geno_header=qx(head -n 1 $geno); chomp $geno_header;
 
 my $index=shift(@ARGV); chomp $index;
 
+my $index_header=qx(head -n 1 $index); chomp $index_header;
 open PHENO, ">"."$list"."_matched_to_"."$geno";
 open GENO, ">"."$geno"."_matched_to_"."$list";
 open INDEX, ">"."$index"."_matched_to_"."$list";
 
 print GENO "$geno_header\n";
+print INDEX "$index_header\n";
 print PHENO "$pheno_header\n";
+
 while(my $line=<IN>){
     chomp $line;
     my @elements=split(/\t/,$line);

@@ -17,7 +17,7 @@ pheno_column<-as.numeric(args[4])
 
 phenotypes<-read.csv(file=pheno,sep="\t",head=TRUE)
 
-index<-read.csv(file=hybrid_index,sep="\t",head=FALSE)
+index<-read.csv(file=hybrid_index,sep="\t",head=TRUE)
 
 tag<-as.character(args[5])
 
@@ -29,10 +29,10 @@ names<-colnames(data)
 track=0
 for (x in 2:length(data[1,])){
 
-dat<-cbind(phenotypes[,pheno_column],index$V4,data[,x])
+dat<-cbind(phenotypes[,pheno_column],index$hybrid_index,data[,x])
 dat<-na.omit(dat)
 
-if(length(dat[,1]) >= (length(data[,1])*0.25) & length(unique(dat[,3]))>1){
+if(length(dat[,1]) >= (length(data[,1])*0.5) & length(unique(dat[,3]))>1){
 
 model2<-glm(as.numeric(dat[,1])~as.numeric(dat[,2]),family="gaussian")
 
