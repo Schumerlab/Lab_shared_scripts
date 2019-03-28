@@ -3,7 +3,7 @@
 
 args <- commandArgs(TRUE)
 if(length(args)<5){
-stop("usage is Rscript perform_glm_admixture_mapping_v2.R genotypes_file hybrid_index_file phenotypes_file focal_column_number name_tag")
+stop("usage is Rscript perform_glm_admixture_mapping_v2_binomialtrait.R genotypes_file hybrid_index_file phenotypes_file focal_column_number name_tag")
 }
 
 infile <- as.character(args[1])
