@@ -1,7 +1,9 @@
 #perl! -w
 
+#NOTE: depends on fastahack- path hard coded below
+
 if(@ARGV<3){
-    print "perl extract_gtf_seqs_mergetranscript_printstdout_10x_assembly.pl list_of_exons.gtf fasta_file name_tag\n"; exit; 
+    print "perl extract_gtf_seqs_mergetranscript_10x_assembly.pl list_of_exons.gtf fasta_file outfile_tag\n"; exit;
 }
 
 my $list=shift(@ARGV); chomp $list;
@@ -32,8 +34,10 @@ while(my $line = <IN>){
 
 #    print "$group\t$start\t$stop\n";
 
+    open OUT, ">"."$list"."_"."$tag";
+    
     if($counter ==1){
-	print ">"."$list"."_"."$tag"."\n";
+	print OUT ">"."$list"."_"."$tag"."\n";
     }
 
     my $curr_seq=qx(/home/groups/schumer/shared_bin/fastahack $fasta -r $group:$start..$stop); chomp $curr_seq;
@@ -49,8 +53,8 @@ if($strand eq '-'){
             #print "$revcomp\n";                                                                                            
 }
 
-print "$seq";
-print "\n";
+print OUT "$seq";
+print OUT "\n";
 
 
 sub reverse_complement_IUPAC {

@@ -3,7 +3,7 @@
 #selects items in a file that *do not* match those in a list
 
 if (@ARGV<4){
-    print "\n perl script list_to_grep_v grepfile outfile grepw_0_1\n"; exit;
+    print "\n perl grep_v_list.pl list_to_grep_v grepfile outfile grepw_0_1\n"; exit;
 }
 #0 for no grep -vw, 1 for yes grep -vw
 

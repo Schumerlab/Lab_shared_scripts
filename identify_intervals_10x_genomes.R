@@ -15,7 +15,7 @@ genos_transposed<-paste(genos,"_transposed",sep="")
 
 for(k in 1:length(chroms)){
 
-command2=paste("grep ",chroms[k]," ",genos_transposed," | perl -pi -e ","'","s/:/\t/g","'"," > ",genos_transposed,"_",chroms[k],sep="")
+command2=paste("grep ",chroms[k]," ",genos_transposed," | perl -p -e ","'","s/:/\t/g","'"," > ",genos_transposed,"_",chroms[k],sep="")
 system(command2)
 
 file=paste(genos_transposed,"_",chroms[k],sep="")

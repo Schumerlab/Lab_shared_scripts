@@ -30,7 +30,7 @@ my $malcount=0;
 my $bircount=0;
 my $ancestry=0;
 my $total=0;
-print "group\tposition\tmalcount\tbircount\thybrid_index\n";
+print "group\tposition\tmalcount\tbircount\thybrid_index\tindivs_cov\n";
 
 my $junk1=<IN>; chomp $junk1;
 my $junk2=<IN2>; chomp $junk2;
@@ -62,7 +62,7 @@ while ((my $line = <IN>) && (my $line2=<IN2>)){
 
     my $marker=$fields1[0];
     $marker=~ s/:/\t/g;
-    print "$marker\t$malcount\t$bircount\t$ancestry\n";
+    print "$marker\t$malcount\t$bircount\t$ancestry\t$total\n";
     #!print "$fields1[0]\t$malcount\t$bircount\t$ancestry\t$total\n";
     $malcount=0; $bircount=0; $total=0; $ancestry=0;
 } # while the infile has lines in it

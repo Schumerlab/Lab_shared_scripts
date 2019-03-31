@@ -1,8 +1,8 @@
 #perl! -w
 
 if(@ARGV<3){
-    print "perl extract_gtf_seqs_mergetranscript_printstdout_10x_assembly.pl list_of_exons.gtf fasta_file name_tag\n"; exit; 
-}
+    print "perl extract_gtf_seqs_mergetranscript.pl gene_of_interest.gtf fasta outfile_tag\n"; exit;
+}#print usage
 
 my $list=shift(@ARGV); chomp $list;
 open IN, $list or die "cannot open list file\n";
@@ -11,7 +11,7 @@ my $fasta=shift(@ARGV); chomp $fasta;
 
 my $tag=shift(@ARGV); chomp $tag;
 
-my $counter=0; my $strand=""; my $seq="";
+my $counter=0;
 while(my $line = <IN>){
 
     $counter++;
@@ -23,33 +23,32 @@ while(my $line = <IN>){
     my $adjust=$elements[7]; chomp $adjust;
     
     if($elements[6] eq '+'){
-	#$start=$start+$adjust;
-	$strand="+";
+#	$start=$start+$adjust;
     } else{
-	#$stop=$stop-$adjust;
-	$strand="-";
+#	$stop=$stop-$adjust;
     }
 
-#    print "$group\t$start\t$stop\n";
+   # print "$group\t$start\t$stop\n";
+
+    my $name="$list"."_"."$tag".".fa";
 
     if($counter ==1){
 	print ">"."$list"."_"."$tag"."\n";
     }
 
-    my $curr_seq=qx(/home/groups/schumer/shared_bin/fastahack $fasta -r $group:$start..$stop); chomp $curr_seq;
+    my $seq=qx(/home/groups/schumer/shared_bin/fastahack $fasta -r $group:$start..$stop); chomp $seq;
 
-    $seq="$seq"."$curr_seq";
+    
+    if($elements[6] eq '-'){
+
+	 $seq = reverse_complement_IUPAC($seq);
+	    #print "$revcomp\n";
+    }
+
+    print "$seq";
     
 }
 
-
-if($strand eq '-'){
-
-    $seq = reverse_complement_IUPAC($seq);
-            #print "$revcomp\n";                                                                                            
-}
-
-print "$seq";
 print "\n";
 
 
