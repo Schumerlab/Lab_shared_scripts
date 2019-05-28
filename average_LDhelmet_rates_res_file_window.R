@@ -11,12 +11,12 @@ chrom_lengths<-as.character(arrArgs[4]) #example: xbir10x_chrlengths in shared_b
 
 data<-read.csv(file=infile,sep="\t",head=FALSE) 
 data<-subset(data,data$V3<=0.4)
-data<-subset(data,data$V1 == chrom)
 lengths<-read.csv(file=chrom_lengths,sep="\t",head=FALSE)
 
 options(scipen=999)
 
 focal_length<-subset(lengths,lengths$V1==chrom)$V2
+#focal_length
 
 start<-1
 stop<-win_size
@@ -26,6 +26,9 @@ counter=0
 
 while(stop < last_marker){
 counter=counter+1
+
+#print(counter)
+
 focal<-subset(data,data$V1 <= stop & data$V2 >= start)
 
 if(length(focal$V1)>0){

@@ -14,6 +14,8 @@ my $fasta=shift(@ARGV); chomp $fasta;
 my $tag=shift(@ARGV); chomp $tag;
 
 my $counter=0; my $strand=""; my $seq="";
+
+open OUT, ">"."$list"."_"."$tag";
 while(my $line = <IN>){
 
     $counter++;
@@ -33,10 +35,8 @@ while(my $line = <IN>){
     }
 
 #    print "$group\t$start\t$stop\n";
-
-    open OUT, ">"."$list"."_"."$tag";
     
-    if($counter ==1){
+    if($counter eq 1){
 	print OUT ">"."$list"."_"."$tag"."\n";
     }
 

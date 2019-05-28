@@ -81,7 +81,7 @@ write.table(intervals,file=paste(file,"_intervals",sep=""),sep="\t",row.names=FA
 }#for all individuals
 
 command3<-paste(genos,"_",chroms[k],sep="")
-system(command3)
+#system(command3)
 
 }#all chroms
 

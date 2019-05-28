@@ -7,7 +7,7 @@
 #perl gvcf_to_pseudo_fasta.pl vcf_list bam_list xiphophorus_birchmanni_10x_12Sep2018_yDAA6.fasta pseudo_inversion_test /home/ms857/molly/scripts_bin /home/ms857/molly/bin
 
 if(@ARGV<6){
-    print "perl gvcf_to_pseudo_fasta.pl vcf_list bam_list fasta_to_pseudoupdate tag_for_outfile path_to_bin_containing:insnp_v9_alisa.py_and_gatk_vcf_to_masked_insnp.pl path_to_bin_containing:GATK_v3.4_seqtk"; exit;
+    print "perl gvcf_to_pseudo_fasta.pl vcf_list bam_list fasta_to_pseudoupdate tag_for_outfile path_to_bin_containing:insnp_v9_gatk3.4_gvcf.py_and_gatk_vcf_to_masked_insnp.pl path_to_bin_containing:GATK_v3.4_seqtk"; exit;
 }#print usage
 
 my $vcf_list=shift(@ARGV); chomp $vcf_list;
@@ -28,7 +28,7 @@ my $string="";
 while ((my $line=<IN>)&&(my $line2=<BAM>)){
     chomp $line;
     my $insnp="$line".".insnp";
-   system("python $insnp_path/insnp_v9_alisa.py $line $insnp 20 5 40 10 10 4 -12.5 -8.0 5");
+   system("python $insnp_path/insnp_v9_gatk3.4_gvcf.py $line $insnp 20 5 40 10 10 4 -12.5 -8.0 5");
       
     my $awkcmd3="awk \'\{sum\+\=\$3\} END \{ print sum\/NR\}\'";
 
