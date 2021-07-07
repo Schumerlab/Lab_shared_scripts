@@ -30,7 +30,7 @@ system("perl $path/transpose_nameout.pl $infile2");
 open IN1, $trans1 or die "cannot open transposed infile1\n";
 open IN2, $trans2 or die "cannot open transposed infile2\n";
 
-my $nummark=qx(wc -l $trans1 | perl -p -e 's/ +/\t/g' | cut -f 2); chomp $nummark;
+my $nummark=qx(wc -l $trans1 | perl -p -e 's/ +/\t/g' | cut -f 1); chomp $nummark;
 $nummark=$nummark-1;
 
 print "number of markers for fdr correction is $nummark\n";
@@ -101,15 +101,19 @@ while ((defined(my $line1 = <IN1>))&&(defined(my $line2 = <IN2>))){
     if($chisprob*$nummark < $thresh){
 	my $marker=$fields1[0];
     print  OUT "$marker\t$exp_homo_par1\t$homo_par1\t$exp_homo_par2\t$homo_par2\t$exp_hets\t$hets\t$HWE\t",$chisprob*$nummark,"\n";
-    } elsif($chisprob*$nummark > $thresh){
+    } else{
 	print OUT2 "$line1\n";
 	print OUT3 "$line2\n";
     }#print out as a deviating marker or as a retained data marker
 
     }#calculate chisq statistic
+    elsif(($exp_homo_par1 eq 0) or ($exp_homo_par2 eq 0) or ($exp_hets eq 0)){
+        print OUT2 "$line1\n";
+        print OUT3 "$line2\n";
+    }#if the expected counts for any group are zero, retain marker   
 
     }#if there is data
-	
+  
     my $sample_size=scalar(@freqs);
 
 } # while the infile has lines in it

@@ -35,9 +35,9 @@ for $i (0..(scalar(@array)-1)){
     	my $current = $array[$i];
 	print "$i\t$current\n";
 	if($mode eq 0){
-        system("grep $current $grepfile >> $outfile");
+        system("grep '$current' $grepfile >> $outfile");
 	}#reg grep
 	if($mode eq 1){
-	system("grep -w $current $grepfile >> $outfile");
+	system("grep -w '$current' $grepfile >> $outfile");
 	}#grep -w
 }

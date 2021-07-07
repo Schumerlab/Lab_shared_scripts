@@ -4,7 +4,7 @@
 #SBATCH --mem=32000
 #SBATCH --cpus-per-task=1
 #SBATCH --time=10:00:00
-#SBATCH -p schumer
+#SBATCH -p hns,normal,schumer,owners
 #SBATCH --job-name=vcf-to-insnp
 #SBATCH --mail-user=schumer@stanford.edu
 

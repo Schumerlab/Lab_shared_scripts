@@ -45,23 +45,25 @@ while(my $line=<IN>){
     chomp $line;
     my @elements=split(/\t/,$line);
     my $name=$elements[0]; chomp $name;
-    $name="$name"."_";
+    #$name="$name"."_";
+    $name="$name";
     print "$name\n";
-    my $geno_match=qx(grep $name $geno); chomp $geno_match;
-    my $index_match=qx(grep $name $index); chomp $index_match;
+    my $geno_match=qx(grep -w $name $geno); chomp $geno_match;
+    my $index_match=qx(grep -w $name $index); chomp $index_match;
 
-    my $check_count=qx(grep $name $geno | wc -l | perl -p -e 's/ +/\t/g' | cut -f 1); chomp $check_count;
-    my $check_index=qx(grep $name $index | wc -l | perl -p -e 's/ +/\t/g' | cut -f 1); chomp $check_index;
+    my $check_count=qx(grep -w $name $geno | wc -l | perl -p -e 's/ +/\t/g' | cut -f 1); chomp $check_count;
+    my $check_index=qx(grep -w $name $index | wc -l | perl -p -e 's/ +/\t/g' | cut -f 1); chomp $check_index;
     if(($check_count>1) or ($check_index>1)){
 	print "$check_count\t$check_index\t$name\t$geno_match\n";
-	die "ERROR: phenotype names do not unique match genotype names\n";
+  #die "ERROR: phenotype names do not unique match genotype names\n";
+  print "ERROR: phenotype names do not unique match genotype names\n";
     }
 
     if(($check_count eq 0) or ($check_index eq 0)){
 	print "warning $name not found, check count: $check_count\tcheck index: $check_index\n";
     } else{
 
-    my $new_name=qx(grep $name $geno | cut -f 1); chomp $new_name;
+    my $new_name=qx(grep -w $name $geno | cut -f 1); chomp $new_name;
 
     $line=~ s/$name/$new_name/g;
 

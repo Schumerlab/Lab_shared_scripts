@@ -50,7 +50,7 @@ my $size = 0;
 
 for $x (0..(scalar(@sequence_names)-1))	{ # put sequence names and sizes into a hash
 	my $noNs = $sequences[$x+1];
-	$noNs =~ s/N//g;
+	#$noNs =~ s/N//g;
 	$size = length($noNs);
 	$contigs{$sequence_names[$x]}=$size;
 	

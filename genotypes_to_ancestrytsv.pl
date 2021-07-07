@@ -27,13 +27,13 @@ while (my $line=<IN>){
 
     my @genotypes=split(/\t/,$line);
 
-#    print OUT1 "$genotypes[0]","\t";
-#    print OUT2 "$genotypes[0]","\t";
-#    print OUT3 "A","\t","$genotypes[0]","\n";
+    print OUT1 "$genotypes[0]","\t";
+    print OUT2 "$genotypes[0]","\t";
+    print OUT3 "A","\t","$genotypes[0]","\n";
 
-    print OUT1 "indiv"."$counter\t";
-    print OUT2 "indiv"."$counter\t";
-    print OUT3 "A\tindiv"."$counter\n";
+#    print OUT1 "indiv"."$counter\t";
+#    print OUT2 "indiv"."$counter\t";
+#    print OUT3 "A\tindiv"."$counter\n";
 
     for my $i (1..scalar(@genotypes)-1){
 
@@ -43,32 +43,32 @@ while (my $line=<IN>){
 	    print OUT2 "NA\t";
 	}
 	elsif(($focal_geno == 0)&&($i != (scalar(@genotypes)-1))){
-	    print OUT1 "0\t";
-	    print OUT2 "1\t";
+	    print OUT1 "1\t";
+	    print OUT2 "0\t";
 	}
 	elsif(($focal_geno ==1)&&($i != (scalar(@genotypes)-1))){
             print OUT1 "0\t"; 
             print OUT2 "0\t";
 	}
 	elsif(($focal_geno==2)&&($i != (scalar(@genotypes)-1))){
-	print OUT1 "1\t";
-	print OUT2 "0\t";
+	print OUT1 "0\t";
+	print OUT2 "1\t";
 	}
 	elsif(($focal_geno eq 'NA')&&($i == (scalar(@genotypes)-1))){
             print OUT1 "NA\n";
             print OUT2 "NA\n";
         }
         elsif(($focal_geno == 0)&&($i == (scalar(@genotypes)-1))){
-            print OUT1 "0\n";
-            print OUT2 "1\n";
+            print OUT1 "1\n";
+            print OUT2 "0\n";
         }
         elsif(($focal_geno ==1)&&($i == (scalar(@genotypes)-1))){
             print OUT1 "0\n";
             print OUT2 "0\n";
         }
         elsif(($focal_geno==2)&&($i == (scalar(@genotypes)-1))){
-	    print OUT1 "1\n";
-	    print OUT2 "0\n";
+	    print OUT1 "0\n";
+	    print OUT2 "1\n";
         }
 
     }
@@ -77,6 +77,6 @@ while (my $line=<IN>){
 
 my $file1="$infile"."_ancestry_par1.tsv"; my $file2="$infile"."_ancestry_par2.tsv";
 
-system("perl -pi -e 's/NA/0.33/g' $file1");
-system("perl -pi -e 's/NA/0.33/g' $file2");
+#system("perl -pi -e 's/NA/0.33/g' $file1");
+#system("perl -pi -e 's/NA/0.33/g' $file2");
 #replace NAs with ambiguous calls that are compatible with php script

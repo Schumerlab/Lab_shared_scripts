@@ -24,14 +24,14 @@ open(F2,$f2);
 while (<F2>) {
     s/\r?\n//;
     @F=split /\t/, $_;
-    $line2{$F[$col2_1].$F[$col2_2]} .= "$_\n"
+    $line2{$F[$col2_1]."_".$F[$col2_2]} .= "$_\n"
 };
 $count2 = $.;
 open(F1,$f1);
 while (<F1>) {
     s/\r?\n//;
     @F=split /\t/, $_;
-    $x = $line2{$F[$col1_1].$F[$col1_2]};
+    $x = $line2{$F[$col1_1]."_".$F[$col1_2]};
     if ($x) {
 	$num_changes = ($x =~ s/^/$_\t/gm);
 	print OUT $x;

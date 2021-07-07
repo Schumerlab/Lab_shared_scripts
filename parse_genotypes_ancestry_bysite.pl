@@ -23,7 +23,7 @@ my $malcount=0;
 my $bircount=0;
 my $ancestry=0;
 
-print OUT "group\tpos\tmalinche_ancestry\tnum_indiv\n";
+print OUT "group\tposition\thybrid_index\tindivs_cov\n";
 
 my $junk1=<IN>; chomp $junk1;
 
