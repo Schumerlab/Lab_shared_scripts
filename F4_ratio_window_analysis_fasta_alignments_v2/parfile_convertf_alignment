@@ -1,0 +1,7 @@
+genotypename: REPLACE.variant.phy.ped
+snpname: REPLACE.map
+indivname: INDIVSUB
+outputformat: EIGENSTRAT
+genotypeoutname: REPLACE.ped.eigen
+snpoutname: REPLACE.map.eigen
+indivoutname: REPLACE.indiv.eigen

@@ -1,0 +1,7 @@
+DIR:   . 
+indivname:    DIR/alignment.eigen.indiv
+snpname:      DIR/alignment.map.eigen.currwindow
+genotypename: DIR/alignment.ped.eigen.currwindow
+popfilename:    list_qpF4ratio
+numchrom:   24
+blgsize: 0.00000001
