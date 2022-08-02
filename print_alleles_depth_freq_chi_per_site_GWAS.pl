@@ -1,10 +1,12 @@
 #perl! -w
 
-if(@ARGV<1){
-    print "perl print_alleles_depth_freq_chi_per_site_GWAS.pl infile.legacy.vcf\n";
+if(@ARGV<2){
+    print "perl print_alleles_depth_freq_chi_per_site_GWAS.pl infile.legacy.vcf low_dp_thresh\n"; exit;
 }
 my $infile=shift(@ARGV); chomp $infile;
 open IN, $infile or die "cannot open infile.legacy.vcf\n";
+
+my $dp_thresh=shift(@ARGV); chomp $dp_thresh;
 
 print "group\tpos\tref_allele\talt_allele\tdepth\tAF-group1\tAF-group2\tLR1\tpchi\n";
 
@@ -48,7 +50,7 @@ while(my $line = <IN>){
             }#pchi entry  
 
 	}#for all info elements
-	    if($dp>100){
+	    if($dp >= $dp_thresh){
 	print "$group\t$positions\t$ref\t$alt\t$dp\t$af1\t$ltr\t$ltr2\t$pchi\n";
 	    }
 	}#for eligible SNPs

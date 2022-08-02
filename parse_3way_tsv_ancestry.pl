@@ -61,7 +61,11 @@ while((my $line1=<IN1>) && (my $line2=<IN2>) && (my $line3=<IN3>) && (my $line4=
 	if($focal6 >= $thresh){$par2=$par2+0.5; $par3=$par3+0.5; $par2par3++; $total++;}
 
     }#for all elements
-    
+
+    if($total != 0){
     print "$id\t$par1\t$par2\t$par3\t",$par1/$total,"\t",$par2/$total,"\t", $par3/$total,"\t", $par1par2/$total, "\t", $par1par3/$total,"\t", $par2par3/$total, "\n";
+    } else{
+	print "$id\t$par1\t$par2\t$par3\tNA\tNA\tNA\tNA\tNA\tNA\n";
+    }
 
 }
