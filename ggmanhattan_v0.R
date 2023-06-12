@@ -21,10 +21,6 @@ ggmanhattanFormat <- function(df,
     
     # Add a cumulative position of each SNP
     arrange(group, pos) %>%
-    mutate(pos2=pos+tot) %>%
-    
-    # Add a cumulative position of each SNP
-    arrange(group, pos) %>%
     mutate(pos2=pos+tot)
   
   return(don)
@@ -33,23 +29,29 @@ ggmanhattanFormat <- function(df,
 ggmanhattanPlot <- function(df,
                             species="",
                             colors=c("grey","black"),
-                            sigThresh=6,
-                            chr_num=24){
+                            sigThresh=6){
   
   # create label locations for x-axis
   axisdf <- df %>%
+    mutate(group = str_remove(group, "^0+")) %>%
     group_by(group) %>% 
-    summarize(center=(max(pos2)+min(pos2))/2)
+    summarize(center=(max(pos2)+min(pos2))/2) %>%
+    mutate(row_num = row_number()) %>%
+    mutate(label = case_when(row_num %% 2 == 1 ~ "yes",
+                             row_num %% 2 != 1 ~ "no")) %>%
+    mutate(label = case_when(str_detect(group,"X") == T | str_detect(group,"Y") == T ~ "yes",
+                             str_detect(group,"X") == F | str_detect(group,"Y") == F ~ label))
+  #View(axisdf)
   
   # create ggplot object
   p <- ggplot(df, aes(x=pos2, y=-log10(LR1))) +
     # Show all points
     geom_point(aes(color=as.factor(group)), alpha=0.9, size=1.3) +
-    scale_color_manual(values = rep(colors, chr_num)) +
+    scale_color_manual(values = rep(colors, length(axisdf$row_num))) +
     
-    # custom X axis:
-    scale_x_continuous(label = subset(axisdf, axisdf$group %% 2 == 1)$group,
-                       breaks = subset(axisdf, axisdf$group %% 2 == 1)$center) +
+    #custom X axis:
+    scale_x_continuous(label = subset(axisdf, axisdf$label == "yes")$group,
+                       breaks = subset(axisdf, axisdf$label == "yes")$center) +
     
     # remove space between plot area and x axis
     scale_y_continuous(expand = c(0, 0),
@@ -66,7 +68,8 @@ ggmanhattanPlot <- function(df,
           panel.grid.major.x = element_blank(),
           panel.grid.minor.x = element_blank(),
           panel.grid.major.y = element_blank(),
-          panel.grid.minor.y = element_blank()) +
+          panel.grid.minor.y = element_blank(),
+          axis.text.x = element_text(angle = 45, hjust = 1)) +
     xlab(expr(paste(italic(!!species)," chromosome",sep=""))) +
     ylab(expression(paste("-log"[10],"(",italic(""*P*""),"-value)",sep="")))
 
