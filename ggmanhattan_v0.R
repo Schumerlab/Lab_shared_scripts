@@ -14,7 +14,7 @@ ggmanhattanFormat <- function(df,
     
     # Calculate cumulative position of each chromosome
     mutate(tot=cumsum(chr_len)-chr_len) %>%
-    select(-chr_len) %>%
+    dplyr::select(-chr_len) %>%
     
     # Add this info to the initial dataset
     left_join(df, ., by=c("group"="group")) %>%
